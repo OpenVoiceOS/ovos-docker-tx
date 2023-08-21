@@ -1,0 +1,37 @@
+---
+version: "3.9"
+
+x-podman:
+  &podman
+  userns_mode: keep-id
+  security_opt:
+    - "label=disable"
+
+x-logging:
+  &default-logging
+  driver: json-file
+  options:
+    mode: non-blocking
+    max-buffer-size: 4m
+
+volumes:
+  ovos_tx_nllb_models:
+    name: ovos_tx_nllb_models
+    driver: local
+services:
+  ovos_tx_nllb:
+    <<: *podman
+    container_name: ovos_tx_nllb
+    hostname: ovos_tx_nllb
+    restart: unless-stopped
+    image: docker.io/smartgic/ovos-tx-server-nllb:${VERSION}
+    logging: *default-logging
+    pull_policy: always
+    tty: true
+    environment:
+      TZ: $TZ
+    ports:
+      - "9686:9686"
+    volumes:
+      - ${CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft:ro,z
+      - ovos_tx_nllb_models:/home/${OVOS_USER}/.local/share/ctranslate2
