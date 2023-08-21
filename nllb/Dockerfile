@@ -4,7 +4,7 @@ FROM smartgic/ovos-tx-server-base:${TAG}
 ARG BUILD_DATE=unknown
 ARG VERSION=unknown
 
-LABEL org.opencontainers.image.title="Open Voice OS OCI NLLB translate image"
+LABEL org.opencontainers.image.title="Open Voice OS OCI NLLB translator image"
 LABEL org.opencontainers.image.description="A translator plugin for Open Voice OS using NLLB"
 LABEL org.opencontainers.image.version=${VERSION}
 LABEL org.opencontainers.image.created=${BUILD_DATE}
