@@ -18,7 +18,7 @@ ARG USER=ovos
 SHELL ["/bin/bash", "-c"]
 
 RUN if [ "${ALPHA}" == "true" ]; then \
-    pip3 install git+https://github.com/OpenVoiceOS/ovos-translate-server git+https://github.com/OpenVoiceOS/ovos-translate-plugin-nllb --pre; \
+    pip3 install git+https://github.com/OpenVoiceOS/ovos-translate-server git+https://github.com/OpenVoiceOS/ovos-lang-detector-fasttext-plugin git+https://github.com/OpenVoiceOS/ovos-translate-plugin-nllb; \
     else \
     pip3 install ovos-translate-server ovos-translate-plugin-nllb; \
     fi \
@@ -27,4 +27,4 @@ RUN if [ "${ALPHA}" == "true" ]; then \
 
 USER $USER
 
-ENTRYPOINT ovos-translate-server --tx-engine ovos-translate-plugin-nllb
+ENTRYPOINT ovos-translate-server --tx-engine ovos-translate-plugin-nllb --detect-engine ovos-lang-detector-fasttext-plugin
