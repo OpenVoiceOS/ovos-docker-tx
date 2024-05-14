@@ -1,0 +1,30 @@
+ARG TAG=alpha
+FROM smartgic/ovos-tx-server-base-cuda:${TAG}
+
+ARG BUILD_DATE=unknown
+ARG VERSION=unknown
+
+LABEL org.opencontainers.image.title="Open Voice OS OCI NLLB translator image"
+LABEL org.opencontainers.image.description="A translator plugin for Open Voice OS using NLLB"
+LABEL org.opencontainers.image.version=${VERSION}
+LABEL org.opencontainers.image.created=${BUILD_DATE}
+LABEL org.opencontainers.image.documentation="https://openvoiceos.github.io/community-docs"
+LABEL org.opencontainers.image.source="https://github.com/OpenVoiceOS/ovos-docker-tx"
+LABEL org.opencontainers.image.vendor="Open Voice OS"
+
+ARG ALPHA=false
+ARG USER=ovos
+
+SHELL ["/bin/bash", "-c"]
+
+RUN if [ "${ALPHA}" == "true" ]; then \
+    pip3 install git+https://github.com/OpenVoiceOS/ovos-translate-server git+https://github.com/OpenVoiceOS/ovos-lang-detector-fasttext-plugin git+https://github.com/OpenVoiceOS/ovos-translate-plugin-nllb; \
+    else \
+    pip3 install ovos-translate-server ovos-translate-plugin-nllb; \
+    fi \
+    && mkdir -p /home/${USER}/.local/share/ctranslate2 \
+    && rm -rf /home/${USER}/.cache/pip
+
+USER $USER
+
+ENTRYPOINT ovos-translate-server --tx-engine ovos-translate-plugin-nllb --detect-engine ovos-lang-detector-fasttext-plugin
