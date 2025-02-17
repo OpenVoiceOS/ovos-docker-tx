@@ -18,11 +18,11 @@ ARG USER=ovos
 SHELL ["/bin/bash", "-c"]
 
 RUN if [ "${ALPHA}" == "true" ]; then \
-    pip3 install --no-cache-dir ovos-translate-server ovos-lang-detector-fasttext-plugin ovos-google-translate-plugin; \
+    pip3 install --no-cache-dir ovos-translate-server ovos-google-translate-plugin; \
     else \
-    pip3 install --no-cache-dir ovos-translate-server ovos-lang-detector-fasttext-plugin ovos-google-translate-plugin; \
+    pip3 install --no-cache-dir ovos-translate-server ovos-google-translate-plugin; \
     fi
 
 USER $USER
 
-ENTRYPOINT ovos-translate-server --tx-engine ovos-google-translate-plufin --detect-engine ovos-lang-detector-fasttext-plugin
+ENTRYPOINT ovos-translate-server --tx-engine ovos-google-translate-plugin --detect-engine ovos-google-lang-detector-plugin
