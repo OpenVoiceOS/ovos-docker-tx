@@ -18,7 +18,7 @@ ARG USER=ovos
 SHELL ["/bin/bash", "-c"]
 
 RUN if [ "${ALPHA}" == "true" ]; then \
-    pip3 install --no-cache-dir ovos-translate-server ovos-google-translate-plugin; \
+    pip3 install --no-cache-dir ovos-translate-server ovos-google-translate-plugin --pre; \
     else \
     pip3 install --no-cache-dir ovos-translate-server ovos-google-translate-plugin; \
     fi
