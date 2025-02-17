@@ -36,3 +36,19 @@ services:
     volumes:
       - ${CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft:ro,z
       - ovos_tx_nllb_models:/home/${OVOS_USER}/.local/share/ctranslate2
+
+  ovos_tx_google:
+    <<: *podman
+    container_name: ovos_tx_google
+    hostname: ovos_tx_google
+    restart: unless-stopped
+    image: docker.io/smartgic/ovos-tx-server-google:${VERSION}
+    logging: *default-logging
+    pull_policy: always
+    tty: true
+    environment:
+      TZ: $TZ
+    ports:
+      - "9687:9686"
+    volumes:
+      - ${CONFIG_FOLDER}:/home/${OVOS_USER}/.config/mycroft:ro,z
